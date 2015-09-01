@@ -1,22 +1,24 @@
-# Introducing the Humble RPi plugin logger gem
+# Using the Humble RPi plugin logger gem version 0.2.0
 
     require 'humble_rpi-plugin-logger'
 
-    log = HumbleRPiPluginLogger.new
+    log = HumbleRPiPluginLogger.new settings: {methods: %i(on_led_message)}
     log.start
     log.respond_to? :on_led_message
     log.on_led_message '0 on'
     log.on_exit
+
+In the above example the method calls to the plugins are logged by declaring the method names under the methods key under settings.
 
 ## Output
 
 Observed the following from file hrpi.log:
 
 <pre>
-# Logfile created on 2015-08-06 15:38:05 +0100 by logger.rb/47272
-I, [2015-08-06T15:39:58.571233 #10275]  INFO -- : on_start() invoked
-I, [2015-08-06T15:40:14.783910 #10275]  INFO -- : method on_led_message invoked; args: ["0 on"]
-I, [2015-08-06T15:40:26.600642 #10275]  INFO -- : on_exit() invoked
+I, [2015-09-01T21:09:02.288204 #601]  INFO -- : on_start() invoked
+I, [2015-09-01T21:09:02.418735 #601]  INFO -- : method on_led_message invoked; a
+rgs: 0 on
+I, [2015-09-01T21:09:02.459349 #601]  INFO -- : on_exit() invoked
 </pre>
 
 ## Resources
