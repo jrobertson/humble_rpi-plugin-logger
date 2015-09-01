@@ -11,21 +11,25 @@ class HumbleRPiPluginLogger
     
     @log = Logger.new(settings[:filepath] || 'hrpi.log')
     
+    settings[:methods].each do |name|
+      
+      method_name = name.to_s
+      
+      instance_eval %Q(
+        def #{method_name}(*args)
+          @log.info "method #{method_name} invoked; args: %s" % args
+        end
+      )      
+    end
+    
   end
   
-  def method_missing(method_name, *args)
-    @log.info "method %s invoked; args: %s" % [method_name, args]
-  end  
-  
-  def respond_to?(name)
-    true
-  end
-
   def start()
 
     @log.info 'on_start() invoked'
     
   end
+  
   
   alias on_start start
   
